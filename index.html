@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Background Changer</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        #image-container { 
+            position: relative; 
+            display: inline-block; 
+            width: 400px;
+            height: 400px;
+            background-color: white; /* Default background */
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        #uploaded-image { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: none;
+            mix-blend-mode: multiply; /* Blends image with background */
+        }
+        .color-button { 
+            margin: 5px; padding: 10px; border: none; cursor: pointer; 
+            color: white; font-weight: bold; border-radius: 5px;
+        }
+    </style>
+    <style>
+        h2{
+            color: rgb(115, 255, 0);
+            background-color: rgb(111, 0, 255);
+            text-align: center;
+        }
+    </style>
+<style>
+    h3{
+        color: rgb(115, 255, 0);
+        background-color: rgb(111, 0, 255);
+        text-align: center;
+        
+    }
+</style>
+</head>
+<body>
+    <h2>Upload an Image</h2>
+    <input type="file" id="image-upload" accept="image/*"><br><br>
+    <div id="image-container">
+        <img id="uploaded-image" src="" alt="Uploaded Image">
+    </div>
+    <br><br>
+    <h3>Change Background</h3>
+    <button class="color-button" style="background-color: red;" onclick="changeBg('red')">Red</button>
+    <button class="color-button" style="background-color: orange;" onclick="changeBg('orange')">orange</button>
+    <button class="color-button" style="background-color: yellow; color: black;" onclick="changeBg('yellow')">yellow</button>
+    <button class="color-button" style="background-color: green;" onclick="changeBg('green')">green</button>
+    <button class="color-button" style="background-color: blue;" onclick="changeBg('blue')">blue</button>
+    <button class="color-button" style="background-color: indigo;" onclick="changeBg('indigo')">Dark blue</button>
+    <button class="color-button" style="background-color: purple;" onclick="changeBg('purple')">purple</button>
+    <br><br>
+    <input type="file" id="bg-upload" accept="image/*" onchange="changeBgImage()">
+    <button onclick="resetBg()">Reset Background </button>
+
+    <script>
+        document.getElementById('image-upload').addEventListener('change', function(event) {
+            let reader = new FileReader();
+            reader.onload = function() {
+                let img = document.getElementById('uploaded-image');
+                img.src = reader.result;
+                img.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        });
+
+        function changeBg(color) {
+            document.getElementById('image-container').style.background = color;
+        }
+
+        function changeBgImage() {
+            let reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('image-container').style.background = `url(${event.target.result}) center/cover no-repeat`;
+            }
+            reader.readAsDataURL(document.getElementById('bg-upload').files[0]);
+        }
+
+        function resetBg() {
+            document.getElementById('image-container').style.background = 'white';
+        }
+    </script>
+</body>
+</html>
